@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
-class RegisterViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+class RegisterViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     
     @IBOutlet weak var emailTextFileld: UITextField!
@@ -17,12 +17,14 @@ class RegisterViewController: UIViewController, UIImagePickerControllerDelegate 
     
     @IBOutlet weak var profileImageView: UIImageView!
     
+    var sendToDBModel = SendToDBModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let checModel = CheckPermission()
-        CheckPermission.showCheckPermission()
+        let checkModel = CheckPermission()
+        checkModel.showCheckPermission()
+        
 
         // Do any additional setup after loading the view.
     }
@@ -31,6 +33,26 @@ class RegisterViewController: UIViewController, UIImagePickerControllerDelegate 
     @IBAction func touroku(_ sender: Any) {
         
         //emailTextfiledがからでない,passtextがからでないことを確認
+        
+        if emailTextFileld.text?.isEmpty != true && passwodTextField.text?.isEmpty != true, let image = profileImageView.image{
+            
+            Auth.auth().createUser(withEmail: emailTextFileld.text!, password: passwodTextField.text!) { (result, error) in
+                
+                if error != nil{
+                    print(error.debugDescription)
+                    return
+                
+                }
+                
+                let data = image.jpegData(compressionQuality: 1.0)
+                
+                self.sendToDBModel.sendProfileImageData(data: data!)
+                
+                
+                
+            }
+            
+        }
         
         //登録
         
@@ -45,6 +67,7 @@ class RegisterViewController: UIViewController, UIImagePickerControllerDelegate 
         //カメラまたはアルバムから選択
         
         //アラートを出す
+        showAlert()
         
         
         
