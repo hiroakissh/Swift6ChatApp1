@@ -9,7 +9,9 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
-class RegisterViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class RegisterViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,SendProfileOKDelegate {
+    
+    
 
     
     @IBOutlet weak var emailTextFileld: UITextField!
@@ -18,12 +20,14 @@ class RegisterViewController: UIViewController, UIImagePickerControllerDelegate,
     @IBOutlet weak var profileImageView: UIImageView!
     
     var sendToDBModel = SendToDBModel()
+    var urlString = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let checkModel = CheckPermission()
         checkModel.showCheckPermission()
+        sendToDBModel.sendProfileOKDelegate = self
         
 
         // Do any additional setup after loading the view.
@@ -46,7 +50,9 @@ class RegisterViewController: UIViewController, UIImagePickerControllerDelegate,
                 
                 let data = image.jpegData(compressionQuality: 1.0)
                 
-                self.sendToDBModel.sendProfileImageData(data: data!)
+                self.sendToDBModel.sendProfileImagedata(data: data!)
+                
+                
                 
                 
                 
@@ -58,6 +64,17 @@ class RegisterViewController: UIViewController, UIImagePickerControllerDelegate,
         
         //emailTextField,profileImage値
         
+        
+    }
+    
+    func sendProfileOKDelegate(url: String) {
+        
+        urlString = url
+        if urlString.isEmpty != true{
+            
+            self.performSegue(withIdentifier: "chat", sender: nil)
+            
+        }
         
     }
     

@@ -8,7 +8,16 @@
 import Foundation
 import FirebaseStorage
 
-class SendDBModel {
+protocol SendProfileOKDelegate {
+    
+    
+    func sendProfileOKDelegate(url:String)
+    
+}
+
+class SendToDBModel {
+    
+    var sendProfileOKDelegate:SendProfileOKDelegate?
     
     init(){
         
@@ -47,6 +56,7 @@ class SendDBModel {
                 }
                 //abosoluteStringでURLをStringにしてアプリ内で保存
                 UserDefaults.standard.setValue(url?.absoluteString, forKey: "userImage")
+                self.sendProfileOKDelegate?.sendProfileOKDelegate(url: url!.absoluteString)
             }
             
         }

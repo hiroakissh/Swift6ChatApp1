@@ -89,7 +89,7 @@
                         <outlet property="emailTextFileld" destination="Nac-pg-eBA" id="ZOy-dE-HyI"/>
                         <outlet property="passwodTextField" destination="chT-c4-Q5T" id="OeZ-Q1-ITS"/>
                         <outlet property="profileImageView" destination="2Wn-gN-y2o" id="x4M-PO-je1"/>
-                        <segue destination="i3W-ck-YsF" kind="show" id="jsu-3R-I47"/>
+                        <segue destination="i3W-ck-YsF" kind="show" identifier="chat" id="jsu-3R-I47"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HMJ-Sv-ro6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
