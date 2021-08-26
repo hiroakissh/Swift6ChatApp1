@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
-class RegisterViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,SendProfileOKDelegate {
+class RegisterViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,SendProfileOKDelegate,UITextFieldDelegate {
     
     
 
@@ -28,11 +28,24 @@ class RegisterViewController: UIViewController, UIImagePickerControllerDelegate,
         let checkModel = CheckPermission()
         checkModel.showCheckPermission()
         sendToDBModel.sendProfileOKDelegate = self
+        emailTextFileld.delegate = self
+        passwodTextField.delegate = self
+        
         
 
         // Do any additional setup after loading the view.
     }
     
+    //画面をタッチしたときにキーボードを閉じたい
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        
+        emailTextFileld.resignFirstResponder()
+        passwodTextField.resignFirstResponder()
+        
+    }
     
     @IBAction func touroku(_ sender: Any) {
         
