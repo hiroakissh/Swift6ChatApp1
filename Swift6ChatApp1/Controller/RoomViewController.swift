@@ -34,9 +34,12 @@ class RoomViewController: UIViewController,UITabBarDelegate,UITableViewDataSourc
         
         tableView.isHidden = false
         
-        //書き直す必要があるs
-        let animation = AnimationType.from(direction: .top, offset: 300)
-        UIView.animate(views: tableView.visibleCells, animations: [animation],delay: 0,duration: 2)
+        //書き直す必要がある
+        //let animation = AnimationType.from(direction: .top, offset: 300)
+        //UIView.animate(views: tableView.visibleCells, animations: [animation],delay: 0,duration: 2)
+        
+        let animation = [AnimationType.vector(CGVector(dx: 0, dy: 30))]
+        UIView.animate(views: tableView.visibleCells, animations: animation,completion: nil)
         
         
     }
@@ -81,7 +84,7 @@ class RoomViewController: UIViewController,UITabBarDelegate,UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        performSegue(withIdentifier: "roomChat", sender: indexPath)
+        performSegue(withIdentifier: "roomChat", sender: indexPath.row)
         
     }
     
@@ -90,6 +93,7 @@ class RoomViewController: UIViewController,UITabBarDelegate,UITableViewDataSourc
         let roomChatVC = segue.destination as! ChatViewController
         //roomNameに受け渡し
         roomChatVC.roomName = roomNameArray[sender as! Int]
+        
         
     }
 

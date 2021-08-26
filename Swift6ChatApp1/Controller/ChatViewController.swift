@@ -31,61 +31,67 @@ class ChatViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         tableView.delegate = self
         tableView.dataSource = self
         
-        //カスタムセル
+        //カスタムセルの登録
         tableView.register(UINib(nibName: "MessageCell", bundle: nil), forCellReuseIdentifier: "Cell")
         
-        
+        //もしUserImageがnilでなければ
         if UserDefaults.standard.object(forKey: "userImage") != nil{
-            
+            //imageStringにuserImageを入れる
             imageString = UserDefaults.standard.object(forKey: "userImage") as! String
             
         }
-        
+        //もし、rommNameがなければAllにする
         if roomName == ""{
             
             roomName = "All"
             
         }
-        
+        print(roomName)
+        //navigationItem.titleにroomNameを入れる
         self.navigationItem.title = roomName
         
-        loadMessage(roomName: roomName)
-        
+        //loadMessage関数を読み込み、引数にroomName
+        loadMessages(roomName: roomName)
     }
     
     //Messageの読み込み
-    func loadMessage(roomName:String){
-        
+    //roomNameを引数として
+    func loadMessages(roomName:String){
+        print("loadMessagesを読んだよ")
+        //dbのroomNameのorderdateをsnapする
         db.collection(roomName).order(by: "date").addSnapshotListener { (snapShot,error) in
             
             self.messages = []
-            
+            print("messagesの初期化")
             if error != nil{
                 
                 print(error.debugDescription)
                 return
                 
             }
-            
+            print("errorなかったよ")
             if let snapShotDoc = snapShot?.documents{
-                
+                print("snapShotの読み込み始めるよ")
                 for doc in snapShotDoc{
                     
                     let data = doc.data()
-                    if let sender = data["sender"] as? String,let body = data["data"] as? String,let imageString = data["imageString"] as? String{
+                    if let sender = data["sender"] as? String,let body = data["body"] as? String,let imageString = data["imageString"] as? String{
                         
                         let newMessage = Message(sender: sender, body: body, imageString: imageString)
                         
                         self.messages.append(newMessage)
+                        print(newMessage)
                         
                         DispatchQueue.main.async {
-                            
                             self.tableView.reloadData()
                             let indexPath = IndexPath(row: self.messages.count - 1, section: 0)
+                            print(indexPath)
                             self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
                             
                         }
                         
+                    }else {
+                        print("読み込めてないよ")
                     }
                     
                 }

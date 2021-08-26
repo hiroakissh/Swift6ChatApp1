@@ -199,6 +199,7 @@
                     <navigationItem key="navigationItem" id="XMe-2x-vFx"/>
                     <connections>
                         <outlet property="messageTextField" destination="seV-SA-jZl" id="It7-B9-YbR"/>
+                        <outlet property="tableView" destination="VWm-GQ-4vl" id="FcP-du-I0z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QNt-ob-NJm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
